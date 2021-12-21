@@ -47,7 +47,9 @@
 </body>
 </html>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="./data.js"></script>
+<script src="./2017.js"></script>
+<script src="./2018.js"></script>
+<script src="./2019.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
 <script>
@@ -56,7 +58,7 @@
                       OSM  LAYER               
 ===================================================*/
 
-    var map = L.map('map').setView([15.322,73.904], 4);
+    var map = L.map('map').setView([15.322,73.904], 10);
 var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
@@ -100,9 +102,13 @@ googleSat.addTo(map);
                       GEOJSON               
 ===================================================*/
 
-var data = L.geoJSON(data,{
+var data_2017 = L.geoJSON(data_2017,{
     onEachFeature: function(feature,layer){
-        layer.bindPopup('<b>This is </b>' + feature.properties.Species)
+        layer.bindPopup(feature.properties.Date+
+        '</br>'+feature.properties.Species + 
+        '</br>'+ feature.properties.Location+
+        '</br>'+ feature.properties.Stranding
+        )
     },
     style:{
         fillColor: 'red',
@@ -111,6 +117,35 @@ var data = L.geoJSON(data,{
     }
 }).addTo(map);
 
+var data_2018 = L.geoJSON(data_2018,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup(feature.properties.Date+
+        '</br>'+ feature.properties.Species + 
+        '</br>'+ feature.properties.Location+
+        '</br>'+ feature.properties.Stranding
+        )
+    },
+    style:{
+        fillColor: 'red',
+        fillOpacity:1,
+        color: 'green'
+    }
+}).addTo(map);
+
+var data_2019 = L.geoJSON(data_2019,{
+    onEachFeature: function(feature,layer){
+        layer.bindPopup(feature.properties.Date+
+        '</br>'+ feature.properties.Species + 
+        '</br>'+ feature.properties.Location+
+        '</br>'+ feature.properties.Stranding
+        )
+    },
+    style:{
+        fillColor: 'red',
+        fillOpacity:1,
+        color: 'green'
+    }
+}).addTo(map);
 /*===================================================
                       LAYER CONTROL               
 ===================================================*/
@@ -123,7 +158,9 @@ var baseLayers = {
 
 var overlays = {
     //"Marker": singleMarker,
-    "PointData":data
+    "2017":data_2017,
+    "2018":data_2018,
+    "2019":data_2019
 };
 
 L.control.layers(baseLayers, overlays).addTo(map);
